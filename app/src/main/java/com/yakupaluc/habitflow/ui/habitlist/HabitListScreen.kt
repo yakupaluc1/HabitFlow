@@ -5,6 +5,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -143,7 +146,14 @@ fun HabitListScreen(
                             SwipeableHabitItem(
                                 item = item,
                                 onToggle = { viewModel.toggleCompletion(item.habit) },
-                                onArchive = { viewModel.archiveHabit(item.habit) }
+                                onArchive = { viewModel.archiveHabit(item.habit) },
+                                modifier = Modifier.animateItem(
+                                    fadeInSpec = tween(durationMillis = 300),
+                                    placementSpec = spring(
+                                        stiffness = Spring.StiffnessLow
+                                    ),
+                                    fadeOutSpec = tween(durationMillis = 300)
+                                )
                             )
                         }
                     }
@@ -215,6 +225,7 @@ private fun SwipeableHabitItem(
     item: HabitListItemUi,
     onToggle: () -> Unit,
     onArchive: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val dismissState = rememberSwipeToDismissBoxState()
 
@@ -226,6 +237,7 @@ private fun SwipeableHabitItem(
 
     SwipeToDismissBox(
         state = dismissState,
+        modifier = modifier,
         enableDismissFromStartToEnd = false,
         backgroundContent = {
             Box(
