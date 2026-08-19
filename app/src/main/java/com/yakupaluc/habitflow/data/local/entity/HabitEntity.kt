@@ -16,6 +16,9 @@ data class HabitEntity(
     @ColumnInfo(name = "color_hex")
     val colorHex: String,
 
+    @ColumnInfo(name = "description")
+    val description: String? = null,
+
     @ColumnInfo(name = "created_at")
     val createdAt: Long = System.currentTimeMillis(),
 

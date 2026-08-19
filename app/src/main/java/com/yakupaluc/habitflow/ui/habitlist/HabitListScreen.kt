@@ -168,8 +168,8 @@ fun HabitListScreen(
     if (showAddDialog) {
         addHabitDialog(
             onDismiss = { showAddDialog = false },
-            onConfirm = { name, cololHex ->
-                viewModel.addHabit(name, cololHex)
+            onConfirm = { name, colorHex, description ->
+                viewModel.addHabit(name, colorHex, description)
                 showAddDialog = false
             }
         )

@@ -58,7 +58,7 @@ Because the UI depends only on the repository interface, the data source could b
 - [x] Unit tests for the streak logic
 - [x] CI with GitHub Actions
 - [x] Habit detail screen with a completion history calendar
-- [ ] Real Room migrations (replacing destructive fallback)
+- [x] Real Room migrations (replacing destructive fallback)
 - [ ] UI tests for the main flows
 
 ## Getting Started

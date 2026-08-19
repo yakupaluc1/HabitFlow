@@ -33,10 +33,11 @@ private val habitColors = listOf(
 @Composable
 fun addHabitDialog(
     onDismiss: () -> Unit,
-    onConfirm: (name: String, cololHex: String) -> Unit
+    onConfirm: (name: String, colorHex: String, description: String) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
     var selectedColor by remember { mutableStateOf(habitColors.first()) }
+    var description by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -51,6 +52,13 @@ fun addHabitDialog(
                     label = { Text("Habit name") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
+                )
+                OutlinedTextField(
+                    value = description,
+                    onValueChange = { description = it },
+                    label = { Text("Description (optional)") },
+                    singleLine = false,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -81,7 +89,7 @@ fun addHabitDialog(
         },
         confirmButton = {
             TextButton(
-                onClick = { onConfirm(name.trim(), selectedColor) },
+                onClick = { onConfirm(name.trim(), selectedColor, description.trim()) },
                 enabled = name.isNotBlank()
             ) {
                 Text("Add")

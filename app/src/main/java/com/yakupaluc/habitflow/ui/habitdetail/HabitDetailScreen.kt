@@ -1,7 +1,6 @@
 package com.yakupaluc.habitflow.ui.habitdetail
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -52,7 +51,9 @@ fun HabitDetailScreen(
         when {
             uiState.isLoading -> {
                 Column(
-                    modifier = Modifier.fillMaxSize().padding(padding),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -62,7 +63,9 @@ fun HabitDetailScreen(
 
             habit == null -> {
                 Column(
-                    modifier = Modifier.fillMaxSize().padding(padding),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
@@ -82,6 +85,13 @@ fun HabitDetailScreen(
                         text = habit.name,
                         style = MaterialTheme.typography.headlineSmall,
                     )
+                    habit.description?.takeIf { it.isNotBlank() }?.let { desc ->
+                        Text(
+                            text = desc,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                     Text(
                         text = "Completed ${habit.completedDates.size} times in total",
                         style = MaterialTheme.typography.bodyLarge,

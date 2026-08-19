@@ -3,6 +3,7 @@ package com.yakupaluc.habitflow.di
 import android.content.Context
 import androidx.room.Room
 import com.yakupaluc.habitflow.data.local.HabitDatabase
+import com.yakupaluc.habitflow.data.local.MIGRATION_2_3
 import com.yakupaluc.habitflow.data.local.dao.HabitDao
 import dagger.Module
 import dagger.Provides
@@ -24,7 +25,7 @@ object DatabaseModule {
         HabitDatabase::class.java,
         "habit_flow.db"
     )
-        .fallbackToDestructiveMigration(dropAllTables = true)
+        .addMigrations(MIGRATION_2_3)
         .build()
 
     @Provides

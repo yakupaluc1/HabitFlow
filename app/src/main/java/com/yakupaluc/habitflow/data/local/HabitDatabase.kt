@@ -8,7 +8,7 @@ import com.yakupaluc.habitflow.data.local.entity.HabitEntity
 
 @Database(
     entities = [HabitEntity::class, HabitCompletionEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class HabitDatabase : RoomDatabase() {

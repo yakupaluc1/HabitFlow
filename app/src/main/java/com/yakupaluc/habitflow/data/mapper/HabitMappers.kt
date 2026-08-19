@@ -17,7 +17,8 @@ fun Habit.toEntity(): HabitEntity = HabitEntity(
     name = name,
     colorHex = colorHex,
     createdAt = createdAt,
-    isArchived = isArchived
+    isArchived = isArchived,
+    description = description
 )
 
 fun HabitWithCompletions.toDomain(todayEpochDay: Long): Habit = Habit(
@@ -26,6 +27,7 @@ fun HabitWithCompletions.toDomain(todayEpochDay: Long): Habit = Habit(
     colorHex = habit.colorHex,
     createdAt = habit.createdAt,
     isArchived = habit.isArchived,
+    description = habit.description,
     isCompletedToday = completions.any { it.dateEpochDay == todayEpochDay },
     completedDates = completions.map { it.dateEpochDay }.toSet()
 )
