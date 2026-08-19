@@ -46,16 +46,13 @@ class HabitListViewModel @Inject constructor(
                 initialValue = HabitListUiState(isLoading = true)
             )
 
-    fun addHabit() {
+    fun addHabit(name: String, colorHex: String) {
         viewModelScope.launch {
-            val names =
-                listOf("Drink water", "Read 10 pages", "Meditate", "Walk 5k steps", "Stretch")
-            val colors = listOf("#EF5350", "#AB47BC", "#42A5F5", "#26A69A", "#FFA726")
             repository.upsertHabit(
                 Habit(
                     id = UUID.randomUUID().toString(),
-                    name = names.random(),
-                    colorHex = colors.random(),
+                    name = name,
+                    colorHex = colorHex,
                     createdAt = System.currentTimeMillis(),
                     isArchived = false
                 )

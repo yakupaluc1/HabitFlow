@@ -37,6 +37,9 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -63,6 +66,7 @@ fun HabitListScreen(
         if (granted) viewModel.sendTestReminder()
     }
 
+    var showAddDialog by remember { mutableStateOf(false) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -105,7 +109,7 @@ fun HabitListScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.addHabit() }) {
+            FloatingActionButton(onClick = { showAddDialog = true }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_add),
                     contentDescription = "Add habit"
@@ -147,6 +151,16 @@ fun HabitListScreen(
                 }
             }
         }
+    }
+
+    if (showAddDialog) {
+        addHabitDialog(
+            onDismiss = { showAddDialog = false },
+            onConfirm = { name, cololHex ->
+                viewModel.addHabit(name, cololHex)
+                showAddDialog = false
+            }
+        )
     }
 }
 
