@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yakupaluc.habitflow.domain.model.Habit
 import com.yakupaluc.habitflow.domain.repository.HabitRepository
+import com.yakupaluc.habitflow.domain.usecase.CalculateStreakUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,13 +17,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HabitListViewModel @Inject constructor(
-    private val repository: HabitRepository
+    private val repository: HabitRepository,
+    private val calculateStreak: CalculateStreakUseCase
 ) : ViewModel() {
 
     val uiState: StateFlow<HabitListUiState> =
         repository.observeActiveHabits()
             .map { habits ->
-                HabitListUiState(habits = habits, isLoading = false)
+                HabitListUiState(
+                    items = habits.map { habit ->
+                        HabitListItemUi(
+                            habit = habit,
+                            streak = calculateStreak(habit.completedDates)
+                        )
+                    },
+                    isLoading = false
+                )
             }
             .stateIn(
                 scope = viewModelScope,

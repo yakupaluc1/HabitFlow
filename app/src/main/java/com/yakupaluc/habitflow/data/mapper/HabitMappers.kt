@@ -26,5 +26,6 @@ fun HabitWithCompletions.toDomain(todayEpochDay: Long): Habit = Habit(
     colorHex = habit.colorHex,
     createdAt = habit.createdAt,
     isArchived = habit.isArchived,
-    isCompletedToday = completions.any { it.dateEpochDay == todayEpochDay }
+    isCompletedToday = completions.any { it.dateEpochDay == todayEpochDay },
+    completedDates = completions.map { it.dateEpochDay }.toSet()
 )

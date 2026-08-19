@@ -37,7 +37,6 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yakupaluc.habitflow.R
-import com.yakupaluc.habitflow.domain.model.Habit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,7 +68,7 @@ fun HabitListScreen(
                     CircularProgressIndicator(Modifier.align(Alignment.Center))
                 }
 
-                uiState.habits.isEmpty() -> {
+                uiState.items.isEmpty() -> {
                     Text(
                         text = "No habits yet. Tap + to add one.",
                         modifier = Modifier.align(Alignment.Center)
@@ -82,10 +81,10 @@ fun HabitListScreen(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        items(uiState.habits, key = { it.id }) { habit ->
+                        items(uiState.items, key = { it.habit.id }) { item ->
                             HabitItem(
-                                habit = habit,
-                                onToggle = { viewModel.toggleCompletion(habit) }
+                                item = item,
+                                onToggle = { viewModel.toggleCompletion(item.habit) }
                             )
                         }
                     }
@@ -97,9 +96,10 @@ fun HabitListScreen(
 
 @Composable
 private fun HabitItem(
-    habit: Habit,
+    item: HabitListItemUi,
     onToggle: () -> Unit
 ) {
+    val habit = item.habit
     Card(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -125,6 +125,13 @@ private fun HabitItem(
                 },
                 modifier = Modifier.weight(1f)
             )
+            if (item.streak > 0) {
+                Text(
+                    text = "🔥 ${item.streak}",
+                    style = MaterialTheme.typography.labelLarge
+                )
+                Spacer(Modifier.width(8.dp))
+            }
             Checkbox(
                 checked = habit.isCompletedToday,
                 onCheckedChange = { onToggle() }
