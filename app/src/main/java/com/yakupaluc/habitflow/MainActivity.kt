@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.yakupaluc.habitflow.ui.habitlist.HabitListScreen
+import com.yakupaluc.habitflow.ui.navigation.HabitFlowNavHost
 import com.yakupaluc.habitflow.ui.theme.HabitFlowTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HabitFlowTheme {
-                HabitListScreen()
+                HabitFlowNavHost()
             }
         }
     }

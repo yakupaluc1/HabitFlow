@@ -9,6 +9,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,6 +63,7 @@ import com.yakupaluc.habitflow.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitListScreen(
+    onHabitClick: (String) -> Unit,
     viewModel: HabitListViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -145,6 +147,7 @@ fun HabitListScreen(
                         items(uiState.items, key = { it.habit.id }) { item ->
                             SwipeableHabitItem(
                                 item = item,
+                                onClick = { onHabitClick(item.habit.id) },
                                 onToggle = { viewModel.toggleCompletion(item.habit) },
                                 onArchive = { viewModel.archiveHabit(item.habit) },
                                 modifier = Modifier.animateItem(
@@ -176,10 +179,15 @@ fun HabitListScreen(
 @Composable
 private fun HabitItem(
     item: HabitListItemUi,
+    onClick: () -> Unit,
     onToggle: () -> Unit
 ) {
     val habit = item.habit
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -223,6 +231,7 @@ private fun HabitItem(
 @Composable
 private fun SwipeableHabitItem(
     item: HabitListItemUi,
+    onClick: () -> Unit,
     onToggle: () -> Unit,
     onArchive: () -> Unit,
     modifier: Modifier = Modifier
@@ -256,7 +265,7 @@ private fun SwipeableHabitItem(
             }
         },
     ) {
-        HabitItem(item = item, onToggle = onToggle)
+        HabitItem(item = item, onClick = onClick, onToggle = onToggle)
     }
 }
 
