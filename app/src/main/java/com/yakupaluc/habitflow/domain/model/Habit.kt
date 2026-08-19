@@ -5,5 +5,6 @@ data class Habit(
     val name: String,
     val colorHex: String,
     val createdAt: Long,
-    val isArchived: Boolean
+    val isArchived: Boolean,
+    val isCompletedToday: Boolean = false
 )

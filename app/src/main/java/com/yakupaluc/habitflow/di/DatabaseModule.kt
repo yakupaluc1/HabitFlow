@@ -23,7 +23,9 @@ object DatabaseModule {
         context,
         HabitDatabase::class.java,
         "habit_flow.db"
-    ).build()
+    )
+        .fallbackToDestructiveMigration(dropAllTables = true)
+        .build()
 
     @Provides
     fun provideHabitDao(database: HabitDatabase): HabitDao = database.habitDao()

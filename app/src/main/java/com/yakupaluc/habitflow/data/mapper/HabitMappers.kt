@@ -1,6 +1,7 @@
 package com.yakupaluc.habitflow.data.mapper
 
 import com.yakupaluc.habitflow.data.local.entity.HabitEntity
+import com.yakupaluc.habitflow.data.local.entity.HabitWithCompletions
 import com.yakupaluc.habitflow.domain.model.Habit
 
 fun HabitEntity.toDomain(): Habit = Habit(
@@ -17,4 +18,13 @@ fun Habit.toEntity(): HabitEntity = HabitEntity(
     colorHex = colorHex,
     createdAt = createdAt,
     isArchived = isArchived
+)
+
+fun HabitWithCompletions.toDomain(todayEpochDay: Long): Habit = Habit(
+    id = habit.id,
+    name = habit.name,
+    colorHex = habit.colorHex,
+    createdAt = habit.createdAt,
+    isArchived = habit.isArchived,
+    isCompletedToday = completions.any { it.dateEpochDay == todayEpochDay }
 )

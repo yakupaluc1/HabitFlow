@@ -10,4 +10,5 @@ interface HabitRepository {
     suspend fun upsertHabit(habit: Habit)
     suspend fun archiveHabit(id: String)
     suspend fun deleteHabit(habit: Habit)
+    suspend fun setHabitCompleted(habitId: String, completed: Boolean)
 }
