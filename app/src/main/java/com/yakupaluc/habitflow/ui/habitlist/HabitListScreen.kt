@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -149,18 +150,15 @@ private fun HabitItem(
 private fun SwipeableHabitItem(
     item: HabitListItemUi,
     onToggle: () -> Unit,
-    onArchive: () -> Unit
+    onArchive: () -> Unit,
 ) {
-    val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = { value ->
-            if (value == SwipeToDismissBoxValue.EndToStart) {
-                onArchive()
-                true
-            } else {
-                false
-            }
+    val dismissState = rememberSwipeToDismissBoxState()
+
+    LaunchedEffect(dismissState.currentValue) {
+        if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
+            onArchive()
         }
-    )
+    }
 
     SwipeToDismissBox(
         state = dismissState,
@@ -172,15 +170,15 @@ private fun SwipeableHabitItem(
                     .clip(MaterialTheme.shapes.medium)
                     .background(MaterialTheme.colorScheme.secondaryContainer)
                     .padding(horizontal = 20.dp),
-                contentAlignment = Alignment.CenterEnd
+                contentAlignment = Alignment.CenterEnd,
             ) {
                 Text(
                     text = "Archive",
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                 )
             }
-        }
+        },
     ) {
         HabitItem(item = item, onToggle = onToggle)
     }
