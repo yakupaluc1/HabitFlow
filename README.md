@@ -69,5 +69,5 @@ Because the UI depends only on the repository interface, the data source could b
 
 ## Author
 
-Yakup Aluç ← *(kendi adın)*
+Yakup Aluç
 [GitHub](https://github.com/yakupaluc1)
