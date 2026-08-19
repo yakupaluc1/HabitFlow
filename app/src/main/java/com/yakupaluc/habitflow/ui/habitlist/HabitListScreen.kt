@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -46,6 +47,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -128,10 +130,7 @@ fun HabitListScreen(
                 }
 
                 uiState.items.isEmpty() -> {
-                    Text(
-                        text = "No habits yet. Tap + to add one.",
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+                    EmptyState(modifier = Modifier.align(Alignment.Center))
                 }
 
                 else -> {
@@ -246,5 +245,31 @@ private fun SwipeableHabitItem(
         },
     ) {
         HabitItem(item = item, onToggle = onToggle)
+    }
+}
+
+@Composable
+private fun EmptyState(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.padding(32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_empty_habits),
+            contentDescription = null,
+            modifier = Modifier.size(72.dp),
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Text(
+            text = "No habits yet",
+            style = MaterialTheme.typography.titleMedium
+        )
+        Text(
+            text = "Tap the + button to create your first habit and start building your streak.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center
+        )
     }
 }
