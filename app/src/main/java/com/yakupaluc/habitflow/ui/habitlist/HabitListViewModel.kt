@@ -65,4 +65,10 @@ class HabitListViewModel @Inject constructor(
             )
         }
     }
+
+    fun archiveHabit(habit: Habit) {
+        viewModelScope.launch {
+            repository.archiveHabit(habit.id)
+        }
+    }
 }
