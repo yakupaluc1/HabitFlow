@@ -37,7 +37,7 @@ This separation means the UI never touches Room directly; it only depends on the
 
 ## Roadmap
 
-- [ ] Mark habits as completed with daily streak tracking
+- [x] Mark habits as completed with daily streak tracking
 - [ ] Swipe to archive / delete
 - [ ] Reminders via WorkManager
 - [ ] Unit and UI tests
