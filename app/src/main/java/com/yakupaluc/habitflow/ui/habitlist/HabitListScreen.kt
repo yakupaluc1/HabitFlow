@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -30,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -81,7 +83,10 @@ fun HabitListScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         items(uiState.habits, key = { it.id }) { habit ->
-                            HabitItem(habit = habit)
+                            HabitItem(
+                                habit = habit,
+                                onToggle = { viewModel.toggleCompletion(habit) }
+                            )
                         }
                     }
                 }
@@ -91,7 +96,10 @@ fun HabitListScreen(
 }
 
 @Composable
-private fun HabitItem(habit: Habit) {
+private fun HabitItem(
+    habit: Habit,
+    onToggle: () -> Unit
+) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -106,7 +114,21 @@ private fun HabitItem(habit: Habit) {
                     .background(Color(habit.colorHex.toColorInt()))
             )
             Spacer(Modifier.width(12.dp))
-            Text(text = habit.name, style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = habit.name,
+                style = MaterialTheme.typography.bodyLarge,
+                textDecoration = if (habit.isCompletedToday) TextDecoration.LineThrough else null,
+                color = if (habit.isCompletedToday) {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                } else {
+                    MaterialTheme.colorScheme.onSurface
+                },
+                modifier = Modifier.weight(1f)
+            )
+            Checkbox(
+                checked = habit.isCompletedToday,
+                onCheckedChange = { onToggle() }
+            )
         }
     }
 }

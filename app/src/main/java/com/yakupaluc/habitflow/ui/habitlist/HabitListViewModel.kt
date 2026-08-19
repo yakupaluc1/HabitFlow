@@ -46,4 +46,13 @@ class HabitListViewModel @Inject constructor(
             )
         }
     }
+
+    fun toggleCompletion(habit: Habit) {
+        viewModelScope.launch {
+            repository.setHabitCompleted(
+                habitId = habit.id,
+                completed = !habit.isCompletedToday
+            )
+        }
+    }
 }
