@@ -2,6 +2,7 @@ package com.yakupaluc.habitflow.ui.habitlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yakupaluc.habitflow.core.notification.ReminderScheduler
 import com.yakupaluc.habitflow.domain.model.Habit
 import com.yakupaluc.habitflow.domain.repository.HabitRepository
 import com.yakupaluc.habitflow.domain.usecase.CalculateStreakUseCase
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HabitListViewModel @Inject constructor(
     private val repository: HabitRepository,
-    private val calculateStreak: CalculateStreakUseCase
+    private val calculateStreak: CalculateStreakUseCase,
+    private val reminderScheduler: ReminderScheduler
 ) : ViewModel() {
 
     val uiState: StateFlow<HabitListUiState> =
@@ -70,5 +72,9 @@ class HabitListViewModel @Inject constructor(
         viewModelScope.launch {
             repository.archiveHabit(habit.id)
         }
+    }
+
+    fun sendTestReminder() {
+        reminderScheduler.sendTestReminderNow()
     }
 }
