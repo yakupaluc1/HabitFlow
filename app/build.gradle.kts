@@ -18,7 +18,7 @@ android {
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.yakupaluc.habitflow.HiltTestRunner"
     }
     buildTypes {
         release {
@@ -80,4 +80,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
+    androidTestImplementation(libs.androidx.work.testing)
 }
