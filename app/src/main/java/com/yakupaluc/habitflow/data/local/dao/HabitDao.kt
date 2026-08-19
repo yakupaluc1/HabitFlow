@@ -34,4 +34,8 @@ interface HabitDao {
 
     @Query("DELETE FROM habit_completions WHERE habit_id = :habitId AND date_epoch_day = :epochDay")
     suspend fun deleteCompletion(habitId: String, epochDay: Long)
+
+    @Transaction
+    @Query("SELECT * FROM habits WHERE id = :id")
+    fun observeHabitWithCompletions(id: String): Flow<HabitWithCompletions>
 }
