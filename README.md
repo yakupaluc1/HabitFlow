@@ -1,5 +1,7 @@
 # HabitFlow
 
+[![CI](https://github.com/yakupaluc1/HabitFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/yakupaluc1/HabitFlow/actions/workflows/ci.yml)
+
 An offline-first habit tracking app for Android, built with Jetpack Compose and a clean, layered architecture.
 
 > ⚠️ Work in progress — this project is being built incrementally as a portfolio piece.
@@ -41,7 +43,7 @@ This separation means the UI never touches Room directly; it only depends on the
 - [x] Swipe to archive / delete
 - [ ] Reminders via WorkManager
 - [ ] Unit and UI tests
-- [ ] CI with GitHub Actions
+- [x] CI with GitHub Actions
 
 ## Getting Started
 
