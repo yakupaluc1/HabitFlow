@@ -57,7 +57,7 @@ Because the UI depends only on the repository interface, the data source could b
 - [x] Reminders via WorkManager
 - [x] Unit tests for the streak logic
 - [x] CI with GitHub Actions
-- [ ] Habit detail screen with a completion history calendar
+- [x] Habit detail screen with a completion history calendar
 - [ ] Real Room migrations (replacing destructive fallback)
 - [ ] UI tests for the main flows
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.yakupaluc.habitflow.core.util.DateProvider
 import com.yakupaluc.habitflow.domain.repository.HabitRepository
 import com.yakupaluc.habitflow.ui.navigation.HabitDetailRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HabitDetailViewModel @Inject constructor(
     repository: HabitRepository,
+    private val dateProvider: DateProvider,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -24,7 +26,11 @@ class HabitDetailViewModel @Inject constructor(
     val uiState: StateFlow<HabitDetailUiState> =
         repository.observeHabitById(route.habitId)
             .map { habit ->
-                HabitDetailUiState(habit = habit, isLoading = false)
+                HabitDetailUiState(
+                    habit = habit,
+                    todayEpochDay = dateProvider.todayEpochDay(),
+                    isLoading = false
+                )
             }
             .stateIn(
                 scope = viewModelScope,

@@ -17,8 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yakupaluc.habitflow.R
@@ -74,7 +76,7 @@ fun HabitDetailScreen(
                         .fillMaxSize()
                         .padding(padding)
                         .padding(24.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Text(
                         text = habit.name,
@@ -84,6 +86,17 @@ fun HabitDetailScreen(
                         text = "Completed ${habit.completedDates.size} times in total",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        text = "Last 15 weeks",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    HabitCalendarView(
+                        days = buildCalendarDays(
+                            completedDays = habit.completedDates,
+                            todayEpochDay = uiState.todayEpochDay
+                        ),
+                        habitColor = Color(habit.colorHex.toColorInt())
                     )
                 }
             }
