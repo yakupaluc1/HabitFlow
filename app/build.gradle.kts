@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.work.runtime)
     implementation(libs.androidx.hilt.work)
+    implementation(libs.androidx.datastore.preferences)
     ksp(libs.androidx.hilt.compiler)
 
     // Compose + lifecycle integration

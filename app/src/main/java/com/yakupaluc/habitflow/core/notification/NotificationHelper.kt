@@ -27,7 +27,7 @@ class NotificationHelper @Inject constructor(
         }
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_add)
+            .setSmallIcon(R.drawable.ic_bell)
             .setContentTitle("Time for your habits")
             .setContentText("Don't break your streak — check in for today.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

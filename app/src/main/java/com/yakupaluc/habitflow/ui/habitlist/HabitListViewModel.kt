@@ -2,6 +2,7 @@ package com.yakupaluc.habitflow.ui.habitlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yakupaluc.habitflow.core.notification.ReminderPreferences
 import com.yakupaluc.habitflow.core.notification.ReminderScheduler
 import com.yakupaluc.habitflow.domain.model.Habit
 import com.yakupaluc.habitflow.domain.repository.HabitRepository
@@ -9,8 +10,7 @@ import com.yakupaluc.habitflow.domain.usecase.CalculateStreakUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.WhileSubscribed
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -20,22 +20,26 @@ import javax.inject.Inject
 class HabitListViewModel @Inject constructor(
     private val repository: HabitRepository,
     private val calculateStreak: CalculateStreakUseCase,
-    private val reminderScheduler: ReminderScheduler
+    private val reminderScheduler: ReminderScheduler,
+    private val reminderPreferences: ReminderPreferences
 ) : ViewModel() {
 
     val uiState: StateFlow<HabitListUiState> =
-        repository.observeActiveHabits()
-            .map { habits ->
-                HabitListUiState(
-                    items = habits.map { habit ->
-                        HabitListItemUi(
-                            habit = habit,
-                            streak = calculateStreak(habit.completedDates)
-                        )
-                    },
-                    isLoading = false
-                )
-            }
+        combine(
+            repository.observeActiveHabits(),
+            reminderPreferences.settings
+        ) { habits, reminder ->
+            HabitListUiState(
+                items = habits.map { habit ->
+                    HabitListItemUi(
+                        habit = habit,
+                        streak = calculateStreak(habit.completedDates)
+                    )
+                },
+                reminderEnabled = reminder.enabled,
+                isLoading = false
+            )
+        }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
@@ -76,5 +80,16 @@ class HabitListViewModel @Inject constructor(
 
     fun sendTestReminder() {
         reminderScheduler.sendTestReminderNow()
+    }
+
+    fun setReminderEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            reminderPreferences.setEnabled(enabled)
+            if (enabled) {
+                reminderScheduler.scheduleDailyReminder(20)
+            } else {
+                reminderScheduler.cancelDailyReminder()
+            }
+        }
     }
 }

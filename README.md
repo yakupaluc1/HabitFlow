@@ -41,7 +41,7 @@ This separation means the UI never touches Room directly; it only depends on the
 
 - [x] Mark habits as completed with daily streak tracking
 - [x] Swipe to archive / delete
-- [ ] Reminders via WorkManager
+- [x] Reminders via WorkManager
 - [ ] Unit and UI tests
 - [x] CI with GitHub Actions
 
