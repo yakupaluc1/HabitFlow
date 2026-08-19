@@ -38,7 +38,7 @@ This separation means the UI never touches Room directly; it only depends on the
 ## Roadmap
 
 - [x] Mark habits as completed with daily streak tracking
-- [ ] Swipe to archive / delete
+- [x] Swipe to archive / delete
 - [ ] Reminders via WorkManager
 - [ ] Unit and UI tests
 - [ ] CI with GitHub Actions
