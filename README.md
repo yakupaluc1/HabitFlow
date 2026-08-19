@@ -59,7 +59,7 @@ Because the UI depends only on the repository interface, the data source could b
 - [x] CI with GitHub Actions
 - [x] Habit detail screen with a completion history calendar
 - [x] Real Room migrations (replacing destructive fallback)
-- [ ] UI tests for the main flows
+- [x] UI tests for the main flows
 
 ## Getting Started
 
