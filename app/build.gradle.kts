@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.glance.appwidget)
     ksp(libs.androidx.hilt.compiler)
 
     // Compose + lifecycle integration

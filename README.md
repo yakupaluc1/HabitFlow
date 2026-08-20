@@ -8,8 +8,8 @@ An offline-first habit tracking app for Android, built with Jetpack Compose and 
 
 | Habit list | Add habit | Reminders |
 |:---:|:---:|:---:|
-| ![Habit list, light](docs/screenshots/LT_1.png) | ![Add habit, light](docs/screenshots/LT_3.png) | ![Reminders, light](docs/screenshots/LT_2.png) |
-| ![Habit list, dark](docs/screenshots/DT_1.png) | ![Add habit, dark](docs/screenshots/DT_3.png) | ![Reminders, dark](docs/screenshots/DT_2.png) |
+| ![Habit list, light](docs/screenshots/LT_1.png) | ![Add habit, light](docs/screenshots/LT_3.png) | ![Reminders, light](docs/screenshots/LT_2.png) | ![Habit detail, light](docs/screenshots/LT_DetailPanel.png) |
+| ![Habit list, dark](docs/screenshots/DT_1.png) | ![Add habit, dark](docs/screenshots/DT_3.png) | ![Reminders, dark](docs/screenshots/DT_2.png) | ![Habit detail, dark](docs/screenshots/DT_DetailPanel.png) |
 
 *Light and dark themes, powered by a custom Material 3 color scheme.*
 
