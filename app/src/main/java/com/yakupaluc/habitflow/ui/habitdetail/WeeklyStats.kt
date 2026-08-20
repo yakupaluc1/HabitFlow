@@ -2,7 +2,7 @@ package com.yakupaluc.habitflow.ui.habitdetail
 
 data class WeekBar(
     val weekIndex: Int,
-    val completedCounts: Int
+    val completedCount: Int
 )
 
 fun buildWeeklyStats(
@@ -20,7 +20,7 @@ fun buildWeeklyStats(
         val count = completedDates.count() { it in weekStart..weekEnd }
         WeekBar(
             weekIndex = week,
-            completedCounts = count
+            completedCount = count
         )
     }
 }

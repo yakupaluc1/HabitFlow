@@ -121,6 +121,18 @@ fun HabitDetailScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Text(
+                        text = "Weekly activity",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    WeeklyStatsChar(
+                        bars = buildWeeklyStats(
+                            completedDates = habit.completedDates,
+                            todayEpochDay = uiState.todayEpochDay
+                        ),
+                        barColor = Color(habit.colorHex.toColorInt()),
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant
+                    )
+                    Text(
                         text = "Last 15 weeks",
                         style = MaterialTheme.typography.titleMedium
                     )
