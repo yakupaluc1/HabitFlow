@@ -21,6 +21,9 @@ An offline-first habit tracking app for Android, built with Jetpack Compose and 
 - Optional daily reminders via a scheduled background notification
 - Fully offline — all data is stored locally
 - Light and dark theme support
+- View a per-habit detail screen with a completion history calendar and weekly stats
+- Home screen widget (Glance) showing today's habits
+- Edit and delete habits
 
 ## Tech Stack
 
@@ -33,6 +36,7 @@ An offline-first habit tracking app for Android, built with Jetpack Compose and 
 - **Asynchrony:** Coroutines & Flow
 - **Testing:** JUnit
 - **CI:** GitHub Actions
+- **Widgets:** Glance (Jetpack Compose for App Widgets)
 
 ## Architecture
 
@@ -41,6 +45,7 @@ The app follows a clean, layered architecture with a strict dependency direction
 - **UI** — Compose screens and ViewModels. Screen state is exposed as a `StateFlow` and collected with `collectAsStateWithLifecycle`.
 - **Domain** — Pure Kotlin models, a `HabitRepository` interface, and use cases such as streak calculation. This layer has no Android or Room dependencies, which keeps the business logic easy to unit test.
 - **Data** — Room database, DAO, DataStore preferences, the repository implementation, and mappers that convert database entities to domain models.
+- **Custom visualizations** — the weekly stats chart is drawn from scratch with Compose `Canvas`, not a charting library.
 
 Because the UI depends only on the repository interface, the data source could be swapped without touching the UI or business logic.
 
