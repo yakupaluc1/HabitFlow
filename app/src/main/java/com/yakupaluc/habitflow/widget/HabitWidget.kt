@@ -6,6 +6,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.action.actionStartActivity
+import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
@@ -17,6 +19,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.color.ColorProvider
+import com.yakupaluc.habitflow.MainActivity
 import com.yakupaluc.habitflow.domain.model.Habit
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.first
@@ -45,6 +48,7 @@ private fun WidgetContent(habits: List<Habit>) {
             .fillMaxSize()
             .background(Color(0xFF00696E))
             .padding(12.dp)
+            .clickable(actionStartActivity<MainActivity>())
     ) {
         Text(
             text = "Today's habits",
