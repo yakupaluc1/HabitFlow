@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import com.yakupaluc.habitflow.domain.model.Habit
 
 private val habitColors = listOf(
     "#EF5350", "#AB47BC", "#42A5F5", "#26A69A", "#FFA726", "#8D6E63",
@@ -33,11 +34,14 @@ private val habitColors = listOf(
 @Composable
 fun addHabitDialog(
     onDismiss: () -> Unit,
-    onConfirm: (name: String, colorHex: String, description: String) -> Unit
+    onConfirm: (name: String, colorHex: String, description: String) -> Unit,
+    initialHabit: Habit? = null
 ) {
-    var name by remember { mutableStateOf("") }
-    var selectedColor by remember { mutableStateOf(habitColors.first()) }
-    var description by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf(initialHabit?.name ?: "") }
+    var selectedColor by remember { mutableStateOf(initialHabit?.colorHex ?: habitColors.first()) }
+    var description by remember { mutableStateOf(initialHabit?.description ?: "") }
+
+    val isEditing = initialHabit != null
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -92,7 +96,7 @@ fun addHabitDialog(
                 onClick = { onConfirm(name.trim(), selectedColor, description.trim()) },
                 enabled = name.isNotBlank()
             ) {
-                Text("Add")
+                Text(if (isEditing) "Save" else "Add")
             }
         },
         dismissButton = {

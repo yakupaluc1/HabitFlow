@@ -28,6 +28,7 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yakupaluc.habitflow.R
+import com.yakupaluc.habitflow.ui.habitlist.addHabitDialog
 import org.w3c.dom.Text
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,6 +39,7 @@ fun HabitDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showEditDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -52,6 +54,12 @@ fun HabitDetailScreen(
                     }
                 },
                 actions = {
+                    IconButton(onClick = { showEditDialog = true }) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_edit),
+                            contentDescription = "Edit habit"
+                        )
+                    }
                     IconButton(onClick = { showDeleteDialog = true }) {
                         Icon(
                             painter = painterResource(R.drawable.ic_delete),
@@ -126,6 +134,18 @@ fun HabitDetailScreen(
                 }
             }
         }
+    }
+
+    val currentHabit = uiState.habit
+    if (showEditDialog && currentHabit != null) {
+        addHabitDialog(
+            onDismiss = { showEditDialog = false },
+            onConfirm = { name, colorHex, description ->
+                viewModel.updateHabit(name, colorHex, description)
+                showEditDialog = false
+            },
+            initialHabit = currentHabit
+        )
     }
 
     if (showDeleteDialog) {

@@ -46,4 +46,17 @@ class HabitDetailViewModel @Inject constructor(
             onDeleted()
         }
     }
+
+    fun updateHabit(name: String, colorHex: String, description: String) {
+        val current = uiState.value.habit ?: return
+        viewModelScope.launch {
+            repository.upsertHabit(
+                current.copy(
+                    name = name,
+                    colorHex = colorHex,
+                    description = description.ifBlank { null }
+                )
+            )
+        }
+    }
 }
