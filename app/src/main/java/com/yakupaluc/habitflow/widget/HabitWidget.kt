@@ -71,9 +71,3 @@ private fun WidgetContent(habits: List<Habit>) {
         }
     }
 }
-
-/*
-git add .
-git commit -m "feat: add home screen widget showing today's habits with Glance"
-git push
-*/
