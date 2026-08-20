@@ -22,8 +22,8 @@ class HabitRepositoryImpl @Inject constructor(
         }
 
     override fun observeHabitById(id: String): Flow<Habit?> =
-        habitDao.observeHabitWithCompletions(id).map { withCompletions ->
-            withCompletions.toDomain(dateProvider.todayEpochDay())
+        habitDao.observeHabitWithCompletions(id).map { list ->
+            list.firstOrNull()?.toDomain(dateProvider.todayEpochDay())
         }
 
     override suspend fun upsertHabit(habit: Habit) =

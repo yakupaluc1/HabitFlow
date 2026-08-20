@@ -12,11 +12,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HabitDetailViewModel @Inject constructor(
-    repository: HabitRepository,
+    private val repository: HabitRepository,
     private val dateProvider: DateProvider,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -37,4 +38,12 @@ class HabitDetailViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = HabitDetailUiState(isLoading = true)
             )
+
+    fun deleteHabit(onDeleted: () -> Unit) {
+        val habit = uiState.value.habit ?: return
+        viewModelScope.launch {
+            repository.deleteHabit(habit)
+            onDeleted()
+        }
+    }
 }

@@ -37,5 +37,5 @@ interface HabitDao {
 
     @Transaction
     @Query("SELECT * FROM habits WHERE id = :id")
-    fun observeHabitWithCompletions(id: String): Flow<HabitWithCompletions>
+    fun observeHabitWithCompletions(id: String): Flow<List<HabitWithCompletions>>
 }
